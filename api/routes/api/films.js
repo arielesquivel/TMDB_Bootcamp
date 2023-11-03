@@ -3,6 +3,7 @@ const router = require("express").Router();
 const { film } = require("../../config/db");
 
 router.get("/", async (req, res) => {
+  console.log(req.usuarioId);
   const films = await film.findall();
   res.json(films);
 });
