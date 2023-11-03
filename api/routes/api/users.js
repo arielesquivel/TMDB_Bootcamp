@@ -5,7 +5,6 @@ const User = require("../../models/users");
 router.post("/register", (req, res) => {
   User.create(req.body).then((user) => {
     res.status(201).send(user);
-    console.log(user, "user");
   });
 });
 //login del usuario

@@ -21,8 +21,9 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3002/api/login",
-        formData
+        "http://localhost:3002/api/users/login",
+        formData,
+        { withCredentials: true }
       );
       console.log("Inicio de sesión exitoso", response.data);
     } catch (error) {

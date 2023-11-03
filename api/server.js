@@ -3,14 +3,18 @@ const cors = require("cors");
 const app = express();
 const apiRoutes = require("./routes/api");
 const db = require("./config/db");
-app.use("/api", apiRoutes);
-
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true,
   })
 );
+
+app.use(express.json());
+app.use("/api", apiRoutes);
+
 db.sync({ force: false })
   .then(() => {
     console.log("sincronizada  bases");
