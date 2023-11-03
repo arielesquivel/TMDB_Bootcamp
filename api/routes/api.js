@@ -5,5 +5,6 @@ const meddileware = require("../controllers/middewares");
 
 router.use("/films", apiFilmsRouter);
 
-router.use("/users", meddileware.checkToken, apiUsersRouter);
+router.use("/users", apiUsersRouter);
+
 module.exports = router;

@@ -8,7 +8,7 @@ const checkToken = (req, res, next) => {
   const userToken = req.headers["user-token"];
   let payload = {};
   try {
-    payload = jwt.decode(userToken, "loging");
+    payload = jwt.decode(userToken, "login");
   } catch (err) {
     return res.json({ error: "el token expiro" });
   }

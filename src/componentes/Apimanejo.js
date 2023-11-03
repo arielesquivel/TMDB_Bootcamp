@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import { FcLike } from "react-icons/fc";
+import "../App.css";
 function Apimanejo() {
   const API_URL = "http://api.themoviedb.org/3/";
   const API_KEY = "7ac73a60aa590575fb0efba44f9fe9a0";
@@ -74,6 +75,7 @@ function Apimanejo() {
               src={`${URL_IMAGE}${selectedMovie.poster_path}`}
               alt={selectedMovie.title}
             />
+
             <p>{selectedMovie.overview}</p>
           </div>
         ) : (
@@ -84,6 +86,7 @@ function Apimanejo() {
                 className="col-md-4"
                 onClick={() => selectMovie(movie)}
               >
+                <FcLike className="corazon" onClick="#" />
                 <img
                   className="img_col"
                   src={`${URL_IMAGE}${movie.poster_path}`}

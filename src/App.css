@@ -191,3 +191,25 @@ footer {
 .login a:hover {
   color: #0056a0;
 }
+.corazon {
+  display: flex;
+}
+.Footer_diseñado {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.Footer_diseñado p {
+  margin: 5px;
+}
+
+.Footer_diseñado a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.Footer_diseñado a:hover {
+  text-decoration: underline;
+}

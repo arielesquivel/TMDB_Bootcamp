@@ -13,12 +13,6 @@ function NavBar() {
         </Link>
       </h1>
       <ul>
-        <li className="nav_li">
-          <Link to="tv/on-the-air">Programa de Television</Link>
-        </li>
-        <li className="nav_li">
-          <Link to="/movie">Peliculas</Link>
-        </li>
         <p className="nav_li">
           <Link to="/login">
             Inicio de sesion

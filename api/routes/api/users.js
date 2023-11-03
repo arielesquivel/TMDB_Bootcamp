@@ -1,51 +1,35 @@
 const router = require("express").Router();
-const bcrypt = require("bcryptjs");
 const { User } = require("../../config/db");
-const { check, validationResult } = require("express-validator");
-const moment = require("moment");
-const jwt = require("jwt-simple");
 
 //registro de usuario
-router.post(
-  "/register",
-  [
-    check("username", "Username es requerido").not().isEmpty(),
-    check("password", "Password es requerido").not().isEmpty(),
-    check("email", "El email debe ser correcto").isEmail(),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
-    req.body.password = bcrypt.hashSync(req.body.password, 10);
-    const user = await User.create(req.body);
-    res.json(user);
-  }
-);
-//inicio de sesion
-router.post("/login", async (req, res) => {
-  const user = await User.findOne({
-    where: { email: req.body.email },
+router.post("/register", (req, res) => {
+  User.create(req.body).then((user) => {
+    res.status(201).send(user);
+    console.log(user, "user");
   });
-  if (user) {
-    const iguales = bcrypt.compareSync(req.body.password, user.password);
-    if (iguales) {
-      res.json({ success: createToken(user) });
-    } else {
-      res.json({ error: "Error en el usuario" });
-    }
-  } else {
-    res.json({ error: "Error en el usuario" });
-  }
 });
-const createToken = (User) => {
-  const payload = {
-    id: User.id,
-    username: User.username,
-    createAt: moment().unix(),
-    expiredAt: moment().add(5, "minutes").unix(),
-  };
-  return jwt.encode(payload, "loging");
-};
+//login del usuario
+
+router.post("/login", (req, res) => {
+  const { email, password } = req.body;
+
+  User.findOne({
+    where: { email },
+  }).then((user) => {
+    if (!user) return res.send(401);
+    user.validatePassword(password).then((isValidate) => {
+      if (!isValidate) return res.send(401);
+      else {
+        const payload = {
+          email: user.email,
+          name: user.name,
+          lastname: user.lastname,
+        };
+        const token = generateToken(payload);
+        res.status(201).cookie("token", token).send(payload);
+      }
+    });
+  });
+});
+
 module.exports = router;

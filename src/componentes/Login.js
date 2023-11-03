@@ -3,6 +3,7 @@ import axios from "axios";
 import NavBar from "./Nav";
 import "../App.css";
 import { Link } from "react-router-dom";
+import Footer from "./Footer";
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
@@ -69,6 +70,7 @@ function Login() {
           <p>Registrate aqui</p>
         </Link>
       </div>
+      <Footer />
     </>
   );
 }
