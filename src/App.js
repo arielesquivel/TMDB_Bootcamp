@@ -3,19 +3,18 @@ import React, { useState, useEffect } from "react";
 import Header from "./componentes/Header";
 import axios from "axios";
 import Login from "./componentes/Login";
-//import Header from "./componentes/Header";
+import Register from "./componentes/Register";
+import { Routes, Route } from "react-router";
 
-/*
-import NavBa from "./componentes/Nav";
-import Main from "./componentes/Main";
-import Footer from "./componentes/Footer";
-*/
 function App() {
   return (
-    <div className="App">
-      <Login />
-      <Header />;
-    </div>
+    <>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/login/Register" element={<Register />} />
+        <Route path="/" element={<Header />} />
+      </Routes>
+    </>
   );
 }
 

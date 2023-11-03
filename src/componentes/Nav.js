@@ -1,30 +1,29 @@
 import React from "react";
 import { AiOutlineTeam } from "react-icons/ai";
 import logo from "../logo.svg";
+import { Link } from "react-router-dom";
 
 function NavBar() {
   return (
     <nav className="navbar ">
       <h1 className="nav_h1">
         TMDB-Plataforma
-        <img src={logo} className="App-logo2" alt="logo" />
+        <Link to="/">
+          <img src={logo} className="App-logo2" alt="logo" />
+        </Link>
       </h1>
       <ul>
         <li className="nav_li">
-          <a href="./peliculas">inicio</a>
+          <Link to="tv/on-the-air">Programa de Television</Link>
         </li>
         <li className="nav_li">
-          <a href="#/home">Programa de Television</a>
-        </li>
-        <li className="nav_li">
-          <a href="#/home">Personas</a>
-        </li>
-        <li className="nav_li">
-          <a href="#/home">Mas</a>
+          <Link to="/movie">Peliculas</Link>
         </li>
         <p className="nav_li">
-          Inicio de sesion
-          <AiOutlineTeam />
+          <Link to="/login">
+            Inicio de sesion
+            <AiOutlineTeam />
+          </Link>
         </p>
       </ul>
     </nav>

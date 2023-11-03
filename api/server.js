@@ -15,6 +15,7 @@ app.use("/api", apiRoutes);
 app.use(
   cors({
     origin: "http://localhost:3000",
+    credentials: true,
   })
 );
 app.listen(3002, () => {
