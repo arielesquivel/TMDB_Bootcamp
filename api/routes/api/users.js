@@ -4,6 +4,8 @@ const { User } = require("../../config/db");
 const { check, validationResult } = require("express-validator");
 const moment = require("moment");
 const jwt = require("jwt-simple");
+
+//registro de usuario
 router.post(
   "/register",
   [
@@ -21,7 +23,7 @@ router.post(
     res.json(user);
   }
 );
-
+//inicio de sesion
 router.post("/login", async (req, res) => {
   const user = await User.findOne({
     where: { email: req.body.email },
