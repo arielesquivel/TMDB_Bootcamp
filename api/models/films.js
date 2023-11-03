@@ -6,9 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
     },
     title: DataTypes.STRING,
-    director: DataTypes.STRING,
     description: DataTypes.STRING,
-    score: DataTypes.INTEGER,
   });
 
   return Film;

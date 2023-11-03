@@ -8,10 +8,10 @@ const db = new Sequelize("tmdb", null, null, {
   logging: false,
 });
 const film = FilmModel(db, Sequelize);
-const User = FilmModel(db, Sequelize);
+const User = UserModel(db, Sequelize);
 
 db.sync({ force: false }).then(() => {
-  console.log("sincronizada");
+  console.log("sincronizada  bases");
 });
 module.exports = {
   film,
