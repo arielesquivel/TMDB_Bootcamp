@@ -1,7 +1,7 @@
-const Sequelize = require("sequelize");
+const { Sequelize, Model, DataTypes } = require("sequelize");
 const db = require("../config/db");
-const { Model, DataTypes } = Sequelize;
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 class User extends Model {
   generateHash = function (password, salt) {
@@ -42,7 +42,7 @@ User.init(
   }
 );
 
-User.beforeCreate((usuario, options) => {
+User.beforeCreate((usuario) => {
   const salt = bcrypt.genSaltSync(8);
   usuario.salt = salt;
 

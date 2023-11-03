@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User } = require("../../config/db");
+const User = require("../../models/users");
 
 //registro de usuario
 router.post("/register", (req, res) => {
@@ -23,7 +23,6 @@ router.post("/login", (req, res) => {
         const payload = {
           email: user.email,
           name: user.name,
-          lastname: user.lastname,
         };
         const token = generateToken(payload);
         res.status(201).cookie("token", token).send(payload);

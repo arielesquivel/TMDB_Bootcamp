@@ -1,25 +1,18 @@
-const jwt = require("jwt-simple");
-const moment = require("moment");
+const express = require("express");
+const router = express.Router();
+const { generateToken, validateToken } = require("../config/tokens");
+var cookieParser = require("cookie-parser");
+router.use(cookieParser());
 
-const checkToken = (req, res, next) => {
-  if (!req.headers["user-token"]) {
-    return res.json({ error: "necesita contraseña" });
-  }
-  const userToken = req.headers["user-token"];
-  let payload = {};
-  try {
-    payload = jwt.decode(userToken, "login");
-  } catch (err) {
-    return res.json({ error: "el token expiro" });
-  }
-  if (payload.expiredAt < moment().unix()) {
-    return res.json({ error: "el token ah expirado" });
-  }
+function validateUser(req, res, next) {
+  const token = req.cookies.token;
+  const { payload } = validateToken(token);
 
-  req.usuarioId = payload.usuarioId;
+  req.user = payload;
 
-  next();
-};
-module.exports = {
-  checkToken: checkToken,
-};
+  if (payload) return next();
+
+  res.sendStatus(401); // Unauthorized
+}
+
+module.exports = validateUser;
