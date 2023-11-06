@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const apiRoutes = require("./routes/api");
+const apiRoutes = require("./routes/api/login/register");
 const db = require("./config/db");
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
@@ -14,6 +14,7 @@ app.use(
 
 app.use(express.json());
 app.use("/api", apiRoutes);
+//app.use("/api", apiRoutes);
 
 db.sync({ force: false })
   .then(() => {

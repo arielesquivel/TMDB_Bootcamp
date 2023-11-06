@@ -2,7 +2,7 @@ const router = require("express").Router();
 const User = require("../../models/users");
 
 //registro de usuario
-router.post("/register", (req, res) => {
+router.post("/login/register", (req, res) => {
   User.create(req.body).then((user) => {
     res.status(201).send(user);
   });
