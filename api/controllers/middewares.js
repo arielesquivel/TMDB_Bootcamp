@@ -12,7 +12,7 @@ function validateUser(req, res, next) {
 
   if (payload) return next();
 
-  res.sendStatus(401); // Unauthorized
+  res.sendStatus(401);
 }
 
 module.exports = validateUser;

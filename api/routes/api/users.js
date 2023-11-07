@@ -3,15 +3,11 @@ const User = require("../../models/users");
 
 //registro de usuario
 router.post("/register", (req, res) => {
-  User.create(req.body)
-    .then((user) => {
-      res.status(201).send(user);
-    })
-    .catch((error) => {
-      res
-        .status(400)
-        .json({ message: "Error al registrar usuario", error: error });
-    });
+  console.log("body", req.body);
+  User.create(req.body).then((user) => {
+    console.log("users", user);
+    res.status(201).send(user);
+  });
 });
 
 //login del usuario

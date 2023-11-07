@@ -4,14 +4,12 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 class User extends Model {
-  generateHash = function (password, salt) {
+  Hash = function (password, salt) {
     return bcrypt.hash(password, salt);
   };
 
   validatePassword(password) {
-    return bcrypt
-      .hash(password, this.salt)
-      .then((hash) => hash === this.password);
+    return bcrypt.hash(password, salt).then((hash) => hash === this.password);
   }
 }
 User.init(
@@ -42,13 +40,13 @@ User.init(
   }
 );
 
-User.beforeCreate((usuario) => {
+User.beforeCreate((user) => {
   const salt = bcrypt.genSaltSync(8);
-  usuario.salt = salt;
+  user.salt = salt;
 
-  return usuario
-    .generateHash(usuario.password, usuario.salt)
-    .then((hash) => (usuario.password = hash));
+  return user.Hash(user.password, salt).then((hash) => {
+    user.password = hash;
+  });
 });
 
 module.exports = User;

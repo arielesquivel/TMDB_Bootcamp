@@ -27,7 +27,11 @@ function Login() {
       );
       console.log("Inicio de sesión exitoso", response.data);
     } catch (error) {
-      setError("Credenciales incorrectas. Inténtalo de nuevo.");
+      if (error.response && error.response.status === 401) {
+        setError("Credenciales incorrectas. Inténtalo de nuevo.");
+      } else {
+        setError("Error inesperado. Inténtalo de nuevo más tarde.");
+      }
     }
   };
 
