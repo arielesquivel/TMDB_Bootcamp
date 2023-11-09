@@ -1,17 +1,21 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
-const db = require("../config/db");
+const db = require("../db/db");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 class User extends Model {
-  Hash = function (password, salt) {
-    return bcrypt.hash(password, salt);
-  };
+  async Hash(password) {
+    const salt = await bcrypt.genSalt(8);
+    this.salt = salt;
+    const hash = await bcrypt.hash(password, salt);
+    return hash;
+  }
 
-  validatePassword(password) {
-    return bcrypt.hash(password, salt).then((hash) => hash === this.password);
+  async validatePassword(password) {
+    const hash = await bcrypt.hash(password, this.salt);
+    return hash === this.password;
   }
 }
+
 User.init(
   {
     email: {
@@ -40,13 +44,9 @@ User.init(
   }
 );
 
-User.beforeCreate((user) => {
-  const salt = bcrypt.genSaltSync(8);
-  user.salt = salt;
-
-  return user.Hash(user.password, salt).then((hash) => {
-    user.password = hash;
-  });
+User.beforeCreate(async (user) => {
+  const hash = await user.Hash(user.password);
+  user.password = hash;
 });
 
 module.exports = User;

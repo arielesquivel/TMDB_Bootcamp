@@ -1,17 +1,15 @@
-const router = require("express").Router();
-const User = require("../../models/users");
+const express = require("express");
+const router = express.Router();
+const User = require("../models/users");
+const jwt = require("jsonwebtoken");
 
-//registro de usuario
 router.post("/register", (req, res) => {
   console.log("body", req.body);
   User.create(req.body).then((user) => {
     console.log("users", user);
-    res.status(201).send(user);
+    return res.status(201).send(user);
   });
 });
-
-//login del usuario
-
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
 

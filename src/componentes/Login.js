@@ -21,7 +21,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3002/api/users/login",
+        "http://localhost:5000/api/login",
         formData,
         { withCredentials: true }
       );
@@ -59,15 +59,7 @@ function Login() {
               onChange={handleInputChange}
             />
           </div>
-          <div>
-            <label>Nombre</label>
-            <input
-              type="text"
-              name="nombre"
-              value={formData.name}
-              onChange={handleInputChange}
-            />
-          </div>
+
           <button type="submit">Iniciar Sesión</button>
         </form>
         {error && <p>{error}</p>}

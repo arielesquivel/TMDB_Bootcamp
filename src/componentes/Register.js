@@ -4,6 +4,7 @@ import NavBar from "./Nav";
 import Footer from "./Footer";
 import axios from "axios";
 import { Link } from "react-router-dom";
+
 function Register() {
   const [formData, setFormData] = useState({
     name: "",
@@ -22,7 +23,7 @@ function Register() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3002/api/users/register",
+        "http://localhost:5000/api/register",
         formData,
         { withCredentials: true }
       );
@@ -31,17 +32,25 @@ function Register() {
       setError("Error al registrarse. Inténtalo de nuevo.");
     }
   };
+
   return (
     <>
       <NavBar />
       <div className="Register">
-        <h2>Registrate</h2>
+        <h2>Regístrate</h2>
         <form onSubmit={handleRegister}>
           <label htmlFor="name">Nombre: </label>
           <input
             type="text"
             name="name"
             value={formData.name}
+            onChange={handleInputChange}
+          />
+          <label htmlFor="name">apellido: </label>
+          <input
+            type="text"
+            name="lastname"
+            value={formData.lastname}
             onChange={handleInputChange}
           />
           <br />
@@ -53,7 +62,7 @@ function Register() {
             onChange={handleInputChange}
           />
           <br />
-          <label htmlFor="passaword">Contraseña: </label>
+          <label htmlFor="password">Contraseña: </label>{" "}
           <input
             type="password"
             name="password"
@@ -65,7 +74,7 @@ function Register() {
         </form>
         {error && <p>{error}</p>}
         <Link to="/login">
-          <p>El Usuario Ya Esta Registrado</p>
+          <p>El Usuario Ya Está Registrado</p>
         </Link>
       </div>
       <Footer />

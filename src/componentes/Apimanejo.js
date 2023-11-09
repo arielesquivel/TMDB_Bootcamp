@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { FcLike } from "react-icons/fc";
 import "../App.css";
+
 function Apimanejo() {
   const API_URL = "http://api.themoviedb.org/3/";
   const API_KEY = "7ac73a60aa590575fb0efba44f9fe9a0";
   const URL_IMAGE = "https://image.tmdb.org/t/p/original";
   const [movies, setMovies] = useState([]);
-  const [movieSearch, setMovieSearch] = useState("discover");
+  const [movieSearch, setMovieSearch] = useState();
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [favorite, setFavorites] = useState([]);
   const apiMovies = async (movieSearch) => {
     try {
       let type = "discover";
@@ -41,6 +43,14 @@ function Apimanejo() {
       await selectMovie(results[0]);
     }
   };
+  const addToFavorite = (movie) => {
+    setFavorites((prevFavorites) => [...prevFavorites, movie]);
+  };
+  const removeFromFavorites = (movie) => {
+    setFavorites((prevFavorites) =>
+      prevFavorites.filter((favMovie) => favMovie.id !== movie.id)
+    );
+  };
   //trae las peliculas
   useEffect(() => {
     async function moviex() {
@@ -64,10 +74,9 @@ function Apimanejo() {
           Search
         </button>
       </form>
-      {/* contenedor de uestra de banner*/}
 
       {/*trayendo las peliculas de la api */}
-      <div className="container mt-3">
+      <div className="container mt-">
         {selectedMovie ? (
           <div>
             <h1>{selectedMovie.title}</h1>
@@ -86,13 +95,26 @@ function Apimanejo() {
                 className="col-md-4"
                 onClick={() => selectMovie(movie)}
               >
-                <FcLike className="corazon" onClick="#" />
+                <FcLike
+                  className={`corazon ${
+                    favorite.some((favMovie) => favMovie.id === movie.id)
+                      ? "favorite"
+                      : ""
+                  }`}
+                  onClick={() => {
+                    if (favorite.some((favMovie) => favMovie.id === movie.id)) {
+                      removeFromFavorites(movie);
+                    } else {
+                      addToFavorite(movie);
+                    }
+                  }}
+                />
                 <img
                   className="img_col"
                   src={`${URL_IMAGE}${movie.poster_path}`}
                   alt={movie.title}
                   height={600}
-                  width="100%"
+                  width="80%"
                 />
                 <h4 className="text-center">{movie.title}</h4>
               </div>
@@ -102,7 +124,6 @@ function Apimanejo() {
       </div>
     </div>
   );
-  //<Header />; //, (<Nav />), (<Main />), (<Footer />);
 }
 
 export default Apimanejo;
