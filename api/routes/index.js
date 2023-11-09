@@ -3,6 +3,11 @@ const router = express.Router();
 const User = require("../models/users");
 const jwt = require("jsonwebtoken");
 
+const generateToken = (payload) => {
+  const secretKey = "your-secret-key"; //codigo secreto
+  const options = { expiresIn: "1h" }; //expira dentro de 1 hs
+  return jwt.sign(payload, secretKey, options);
+};
 router.post("/register", (req, res) => {
   console.log("body", req.body);
   User.create(req.body).then((user) => {
@@ -31,5 +36,4 @@ router.post("/login", (req, res) => {
     });
   });
 });
-
 module.exports = router;
