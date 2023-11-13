@@ -4,7 +4,10 @@ import NavBar from "./Nav";
 import "../App.css";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
+import { Redirect } from "react-router-dom";
+
 function Login() {
+  const [redirect, setRedirect] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -33,6 +36,7 @@ function Login() {
         setError("Error inesperado. Inténtalo de nuevo más tarde.");
       }
     }
+    setRedirect(true);
   };
 
   return (
